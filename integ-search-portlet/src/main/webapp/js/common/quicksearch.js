@@ -212,7 +212,7 @@ window.initQuickSearch = function initQuickSearch(portletId,seeAllMsg, noResultM
           }
         });
                         
-        var messageRow = rows.length==0 ? QUICKSEARCH_NO_RESULT.replace(/%{query}/, query) : QUICKSEARCH_SEE_ALL;
+        var messageRow = rows.length==0 ? QUICKSEARCH_NO_RESULT.replace(/%{query}/, inputSanitization(query)) : QUICKSEARCH_SEE_ALL;
         $(quickSearchResult_id).html(QUICKSEARCH_TABLE_TEMPLATE.replace(/%{resultRows}/, rows.join("")).replace(/%{messageRow}/g, messageRow));
         if ($.browser.msie  && parseInt($.browser.version, 10) == 8) {
         	$(quickSearchResult_id).show();              
@@ -576,3 +576,6 @@ window.initQuickSearchSetting = function(allMsg,alertOk,alertNotOk){
 }
 })($);
 
+function inputSanitization(keyword) {
+  return keyword.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/\//g, "&#x2F;")
+}

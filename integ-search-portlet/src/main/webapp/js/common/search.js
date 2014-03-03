@@ -383,13 +383,13 @@ window.initSearch = function initSearch() {
         if(append) {
           $("#showMore").hide();
         } else {
-          clearResultPage("No result for <strong>" + $("#txtQuery").val() + "<strong>");
+          clearResultPage("No result for <strong>" + inputSanitization($("#txtQuery").val()) + "<strong>");
         }
         return;
       }
 
       NUM_RESULTS_RENDERED = NUM_RESULTS_RENDERED + current.length;
-      var resultHeader = "Results " + 1 + " to " + NUM_RESULTS_RENDERED + " for <strong>" + $("#txtQuery").val() + "<strong>";
+      var resultHeader = "Results " + 1 + " to " + NUM_RESULTS_RENDERED + " for <strong>" +  inputSanitization($("#txtQuery").val()) + "<strong>";
       $("#resultHeader").html(resultHeader);
       $("#resultSort").show();
       $("#resultPage").show();
@@ -682,4 +682,8 @@ initSearch();
  */
 function onImgError(object, errorClasses) {
   $(object).parent().empty().append($(document.createElement('i')).addClass(errorClasses));
+}
+
+function inputSanitization(keyword) {
+  return keyword.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/\//g, "&#x2F;")
 }
